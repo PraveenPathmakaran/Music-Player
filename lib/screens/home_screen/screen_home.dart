@@ -1,7 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
-import 'dart:developer';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:musicplayer/functions/design_widgets.dart';
@@ -62,13 +58,13 @@ class _ScreenHomeState extends State<ScreenHomeMain>
                     showModalBottomSheet(
                         backgroundColor: Colors.black,
                         context: context,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(30),
                           ),
                         ),
                         builder: (context) {
-                          return ScreenAddToFavourits();
+                          return const ScreenAddToFavourits();
                         });
                   } else if (tabController.index == 2) {
                     openDialog(context);
@@ -87,10 +83,10 @@ class _ScreenHomeState extends State<ScreenHomeMain>
             drawer: Drawer(
               width: 250,
               backgroundColor: appbarColor,
-              child: DrawerContent(),
+              child: const DrawerContent(),
             ),
             appBar: AppBar(
-              title: Text('Music Player'),
+              title: const Text('Music Player'),
               centerTitle: true,
               backgroundColor: appbarColor,
               bottom: TabBar(
@@ -122,7 +118,7 @@ class _ScreenHomeState extends State<ScreenHomeMain>
                       onPressed: () {
                         Scaffold.of(context).openDrawer();
                       },
-                      icon: Icon(Icons.settings));
+                      icon: const Icon(Icons.settings));
                 },
               ),
             ),

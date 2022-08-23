@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:collection';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:musicplayer/db/db_functions.dart';
 import 'package:musicplayer/functions/design_widgets.dart';
 import 'package:musicplayer/model/music_model.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../../functions/audio_functions.dart';
 import '../favourite_screen/favourites_functions.dart';

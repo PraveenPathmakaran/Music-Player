@@ -128,7 +128,7 @@ class ScreenPlaylistAudios extends StatelessWidget {
                                                 Navigator.pop(context);
                                               },
                                               child: functionText(
-                                                  "Remove",
+                                                  "Remove From $playlistname",
                                                   Colors.white,
                                                   FontWeight.bold,
                                                   20)),
@@ -172,7 +172,7 @@ class ScreenPlaylistAudios extends StatelessWidget {
                                                                   .id
                                                                   .toString())
                                                       ? functionText(
-                                                          "Favourites Remove",
+                                                          "Remove From Favourites",
                                                           Colors.white,
                                                           FontWeight.bold,
                                                           20)

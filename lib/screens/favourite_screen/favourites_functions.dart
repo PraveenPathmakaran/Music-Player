@@ -1,13 +1,5 @@
-import 'dart:developer';
-
-import 'package:flutter/material.dart';
-import 'package:musicplayer/model/music_model.dart';
-import 'package:musicplayer/screens/home_screen/screen_home.dart';
-
-import '../../functions/audio_functions.dart';
 import '../../main.dart';
 import '../splash_screen/screen_splash.dart';
-import 'screen_favourite.dart';
 
 Future<void> addFavouritesToDB(String id) async {
   if (tempFavouriteList.contains(id)) {
@@ -16,7 +8,6 @@ Future<void> addFavouritesToDB(String id) async {
     tempFavouriteList.add(id);
     await favouriteDB.put("favourite", tempFavouriteList);
     getAllFavouritesFromDB();
-    favouriteScreenAudioListUpdation = true;
   }
 }
 

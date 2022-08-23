@@ -127,6 +127,7 @@ class DrawerContent extends StatelessWidget {
                             value: notification.value,
                             onChanged: ((value) {
                               notification.value = value;
+                              audioPlayer.showNotification = value;
                             }),
                           );
                         })

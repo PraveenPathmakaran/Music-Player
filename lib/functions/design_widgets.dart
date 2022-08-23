@@ -1,14 +1,10 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
-
-import 'dart:developer';
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:musicplayer/screens/favourite_screen/screen_favourite.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist.dart';
 import '../screens/play_screen/screen_play.dart';
 import '../screens/splash_screen/screen_splash.dart';
-import 'audio_functions.dart';
 
 Color backgroundColor1 = Color(0xFF2C3639);
 Color backgroundColor2 = Color(0xFF1e1c1d);

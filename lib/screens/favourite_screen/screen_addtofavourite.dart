@@ -1,13 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../splash_screen/screen_splash.dart';
 import 'favourites_functions.dart';
-import 'screen_favourite.dart';
-
-bool addfavouriteScreenAudioListUpdation = true;
 
 class ScreenAddToFavourits extends StatelessWidget {
   const ScreenAddToFavourits({Key? key}) : super(key: key);
@@ -19,6 +15,22 @@ class ScreenAddToFavourits extends StatelessWidget {
         padding: EdgeInsets.all(10),
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.only(left: 8, right: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  functionText(
+                      "Add to Favourites", Colors.white, FontWeight.bold, 18),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: functionText(
+                          "Close", Colors.white, FontWeight.bold, 18))
+                ],
+              ),
+            ),
             ValueListenableBuilder(
                 valueListenable: favouritesListFromDb,
                 builder: (context, value, child) {
@@ -31,14 +43,6 @@ class ScreenAddToFavourits extends StatelessWidget {
                         ),
                         color: colorListTile,
                         child: ListTile(
-                          onTap: () async {
-                            if (addfavouriteScreenAudioListUpdation) {
-                              await createAudiosFileList(allAudioListFromDB);
-                            }
-                            favouriteScreenAudioListUpdation = true;
-                            // audioPlayer.playlistPlayAtIndex(index);
-                            miniPlayerVisibility.value = true;
-                          },
                           leading: CircleAvatar(
                             radius: 35,
                             backgroundColor: Colors.transparent,

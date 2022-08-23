@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'package:musicplayer/screens/playlist_screen/playlist_functions.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist_songs.dart';
-import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../splash_screen/screen_splash.dart';
 
@@ -21,6 +20,22 @@ class SreenAddToPlaylist extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(10),
               child: Column(children: [
+                Container(
+                  padding: EdgeInsets.only(left: 8, right: 8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      functionText("Add Songs to $playlistname", Colors.white,
+                          FontWeight.bold, 17),
+                      TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: functionText(
+                              "Close", Colors.white, FontWeight.bold, 17))
+                    ],
+                  ),
+                ),
                 ListView.builder(
                   controller: ScrollController(),
                   itemBuilder: ((context, index) {
@@ -30,11 +45,6 @@ class SreenAddToPlaylist extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                          onTap: () async {
-                            createAudiosFileList(allAudioListFromDB);
-                            // await audioPlayer.playlistPlayAtIndex(index);
-                            miniPlayerVisibility.value = true;
-                          },
                           leading: CircleAvatar(
                             radius: 35,
                             backgroundColor: Colors.transparent,

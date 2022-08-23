@@ -15,6 +15,10 @@ Future<void> keyUpdate() async {
 }
 
 Future<void> playlistCreation(String key) async {
+  bool keys = playlistDB.containsKey(key);
+  if (keys) {
+    return;
+  }
   List<String> emptyList = [];
   await playlistDB.put(key, emptyList);
   allkey.notifyListeners();
@@ -50,5 +54,14 @@ Future<void> playlistSongDelete(String id, String playlistname) async {
   playlistDB.put(playlistname, tempPlaylistId);
   await getPlaylistSongs(playlistname);
   playlistSongsFromDB.notifyListeners();
+  await keyUpdate();
+}
+
+Future<void> playlistNameUpdate(
+    String playlistname, String newplaylistname) async {
+  List<String>? tempList = playlistDB.get(playlistname);
+  tempList ??= [];
+  await playlistDB.put(newplaylistname, tempList);
+  await playlistDelete(playlistname);
   await keyUpdate();
 }

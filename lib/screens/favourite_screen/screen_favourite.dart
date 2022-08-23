@@ -1,13 +1,9 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
 import 'package:musicplayer/screens/splash_screen/screen_splash.dart';
 import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../home_screen/home_widgets.dart';
 import '../play_screen/screen_play.dart';
-
-bool favouriteScreenAudioListUpdation =
-    true; //for preventing each time list tile press audio list creatiion
 
 class ScreenFavourite extends StatelessWidget {
   const ScreenFavourite({Key? key}) : super(key: key);
@@ -20,7 +16,7 @@ class ScreenFavourite extends StatelessWidget {
       valueListenable: favouritesListFromDb,
       builder: (context, value, child) {
         return Container(
-          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
           color: Colors.black,
           child: ListView.builder(
             controller: ScrollController(),
@@ -39,13 +35,13 @@ class ScreenFavourite extends StatelessWidget {
                       context,
                       MaterialPageRoute(
                         builder: (context) {
-                          return ScreenPlay();
+                          return const ScreenPlay();
                         },
                       ),
                     );
                     miniPlayerVisibility.value = true;
                   },
-                  leading: CircleAvatar(
+                  leading: const CircleAvatar(
                     radius: 20,
                     backgroundColor: Colors.transparent,
                     backgroundImage: AssetImage('assets/images/songicon.png'),
@@ -53,12 +49,12 @@ class ScreenFavourite extends StatelessWidget {
                   title: Text(
                     favouritesListFromDb.value[index].title.toString(),
                     maxLines: 1,
-                    style: TextStyle(color: Colors.white, fontSize: 15),
+                    style: const TextStyle(color: Colors.white, fontSize: 15),
                   ),
                   subtitle: Text(
                     favouritesListFromDb.value[index].artist.toString(),
                     maxLines: 1,
-                    style: TextStyle(color: Colors.white, fontSize: 10),
+                    style: const TextStyle(color: Colors.white, fontSize: 10),
                   ),
                   trailing: IconButton(
                     icon: functionIcon(Icons.more_vert, 20, Colors.white),
@@ -66,13 +62,13 @@ class ScreenFavourite extends StatelessWidget {
                       showModalBottomSheet(
                           backgroundColor: appbarColor,
                           context: context,
-                          shape: RoundedRectangleBorder(
+                          shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.vertical(
                               top: Radius.circular(30),
                             ),
                           ),
                           builder: (ctx) {
-                            return Container(
+                            return SizedBox(
                               height: 300,
                               child: HomeBottomSheet(
                                 id: favouritesListFromDb.value[index].id

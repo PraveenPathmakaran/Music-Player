@@ -1,4 +1,6 @@
-// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors
+// ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, use_build_context_synchronously
+
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:musicplayer/db/db_functions.dart';
@@ -77,15 +79,28 @@ class ScreenPlaylist extends StatelessWidget {
                                     child: Column(
                                       children: [
                                         TextButton(
-                                            onPressed: () {
-                                              playlistDelete(allkey.value[index]
-                                                  .toString());
-                                              snackBar("Removed Successfully",
-                                                  backgroundColor2, context);
-                                              Navigator.pop(context);
+                                          onPressed: () {
+                                            playlistDelete(
+                                                allkey.value[index].toString());
+                                            snackBar("Removed Successfully",
+                                                backgroundColor2, context);
+                                            Navigator.pop(context);
+                                          },
+                                          child: functionText(
+                                              "Delete Playlist",
+                                              Colors.white,
+                                              FontWeight.bold,
+                                              20),
+                                        ),
+                                        TextButton(
+                                            onPressed: () async {
+                                              await updatePlaylistName(
+                                                  context,
+                                                  allkey.value[index]
+                                                      .toString());
                                             },
                                             child: functionText(
-                                                "Delete Playlist",
+                                                "Edit Playlist",
                                                 Colors.white,
                                                 FontWeight.bold,
                                                 20)),
@@ -175,25 +190,30 @@ class ScreenAddToPlaylistFromHome extends StatelessWidget {
 
 Widget findPlaylistCount(String playlistname) {
   final value = playlistDB.get(playlistname);
+  if (value == null) {
+    return SizedBox();
+  }
 
-  return Center(
-    child: Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5),
-        ),
-        color: Colors.black,
-      ),
-      padding: EdgeInsets.all(7),
-      width: 30,
-      height: 30,
-      child: Text(
-        value!.length.toString(),
-        style: TextStyle(
-          color: Colors.white,
-        ),
-        textAlign: TextAlign.center,
-      ),
-    ),
-  );
+  return value.isEmpty
+      ? SizedBox()
+      : Center(
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(5),
+              ),
+              color: Colors.black,
+            ),
+            padding: EdgeInsets.all(7),
+            width: 30,
+            height: 30,
+            child: Text(
+              value.length.toString(),
+              style: TextStyle(
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        );
 }
