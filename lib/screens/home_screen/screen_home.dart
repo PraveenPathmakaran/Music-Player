@@ -9,6 +9,7 @@ import '../playlist_screen/playlist_widgets.dart';
 import 'home_widgets.dart';
 
 late TabController tabController;
+bool floatingBtnVisibility = true;
 
 class ScreenHomeMain extends StatefulWidget {
   const ScreenHomeMain({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class ScreenHomeMain extends StatefulWidget {
 }
 
 class _ScreenHomeState extends State<ScreenHomeMain>
-    with AutomaticKeepAliveClientMixin, TickerProviderStateMixin {
+    with TickerProviderStateMixin {
   final AssetsAudioPlayer audioPlayer = AssetsAudioPlayer();
 
   @override
@@ -43,41 +44,39 @@ class _ScreenHomeState extends State<ScreenHomeMain>
   }
 
   @override
-  bool get wantKeepAlive => true;
-  @override
   Widget build(BuildContext context) {
-    super.build(context);
+    setState(() {
+      tabController.index == 0
+          ? floatingBtnVisibility = false
+          : floatingBtnVisibility = true;
+    });
     return ValueListenableBuilder(
       valueListenable: miniPlayerVisibility,
       builder: (BuildContext context, bool value, Widget? child) {
         return Scaffold(
-            floatingActionButton: FloatingActionButton(
-                backgroundColor: appbarColor,
-                onPressed: (() {
-                  if (tabController.index == 1) {
-                    showModalBottomSheet(
-                        backgroundColor: Colors.black,
-                        context: context,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(30),
+            floatingActionButton: Visibility(
+              visible: floatingBtnVisibility,
+              child: FloatingActionButton(
+                  backgroundColor: appbarColor,
+                  onPressed: (() {
+                    if (tabController.index == 1) {
+                      showModalBottomSheet(
+                          backgroundColor: Colors.black,
+                          context: context,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(30),
+                            ),
                           ),
-                        ),
-                        builder: (context) {
-                          return const ScreenAddToFavourits();
-                        });
-                  } else if (tabController.index == 2) {
-                    openDialog(context);
-                  } else {
-                    showSearch(
-                      context: context,
-                      delegate: MusicSearch(),
-                    );
-                  }
-                }),
-                child: tabController.index == 0
-                    ? functionIcon(Icons.search, 20, Colors.white)
-                    : functionIcon(Icons.add, 20, Colors.white)),
+                          builder: (context) {
+                            return const ScreenAddToFavourits();
+                          });
+                    } else if (tabController.index == 2) {
+                      openDialog(context);
+                    } else {}
+                  }),
+                  child: functionIcon(Icons.add, 20, Colors.white)),
+            ),
             backgroundColor: Colors.black,
             extendBodyBehindAppBar: true,
             drawer: Drawer(
@@ -90,11 +89,7 @@ class _ScreenHomeState extends State<ScreenHomeMain>
               centerTitle: true,
               backgroundColor: appbarColor,
               bottom: TabBar(
-                onTap: (value) {
-                  setState(() {
-                    value;
-                  });
-                },
+                onTap: (value) {},
                 controller: tabController,
                 tabs: [
                   Tab(
@@ -112,6 +107,16 @@ class _ScreenHomeState extends State<ScreenHomeMain>
                 ],
               ),
               elevation: 0,
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      showSearch(
+                        context: context,
+                        delegate: MusicSearch(),
+                      );
+                    },
+                    icon: Icon(Icons.search))
+              ],
               leading: Builder(
                 builder: (BuildContext context) {
                   return IconButton(
