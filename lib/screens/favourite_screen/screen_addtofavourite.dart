@@ -2,8 +2,10 @@
 
 import 'package:flutter/material.dart';
 import '../../functions/design_widgets.dart';
+import '../home_screen/home_widgets.dart';
 import '../splash_screen/screen_splash.dart';
 import 'favourites_functions.dart';
+import 'screen_favourite.dart';
 
 class ScreenAddToFavourits extends StatelessWidget {
   const ScreenAddToFavourits({Key? key}) : super(key: key);
@@ -65,12 +67,31 @@ class ScreenAddToFavourits extends StatelessWidget {
                                 ? functionIcon(Icons.remove, 20, Colors.white)
                                 : functionIcon(Icons.add, 20, Colors.white),
                             onPressed: () async {
-                              tempFavouriteList.contains(
-                                      allAudioListFromDB[index].id.toString())
-                                  ? await favouritesRemove(
-                                      allAudioListFromDB[index].id.toString())
-                                  : await addFavouritesToDB(
-                                      allAudioListFromDB[index].id.toString());
+                              //song play time music stopping fixed directly remove from audioplaylist
+                              if (tempFavouriteList.contains(
+                                  allAudioListFromDB[index].id.toString())) {
+                                if (audioPlayer.playlist!.audios.isNotEmpty &&
+                                    favouritesAudioListUpdate) {
+                                  audioPlayer.playlist!.audios.removeWhere(
+                                      (element) =>
+                                          element.metas.id ==
+                                          allAudioListFromDB[index]
+                                              .id
+                                              .toString());
+                                }
+                                await favouritesRemove(
+                                    allAudioListFromDB[index].id.toString());
+                              } else {
+                                await addFavouritesToDB(
+                                    allAudioListFromDB[index].id.toString());
+                              }
+
+                              // tempFavouriteList.contains(
+                              //         allAudioListFromDB[index].id.toString())
+                              //     ? await favouritesRemove(
+                              //         allAudioListFromDB[index].id.toString())
+                              //     : await addFavouritesToDB(
+                              //         allAudioListFromDB[index].id.toString());
                             },
                           ),
                         ),

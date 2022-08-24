@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:musicplayer/functions/audio_functions.dart';
 
 import '../../functions/design_widgets.dart';
+import '../favourite_screen/screen_favourite.dart';
 import '../home_screen/home_widgets.dart';
 import '../play_screen/screen_play.dart';
+import '../playlist_screen/screen_playlist_songs.dart';
 import '../splash_screen/screen_splash.dart';
 
 class MusicSearch extends SearchDelegate {
@@ -78,6 +80,8 @@ class MusicSearch extends SearchDelegate {
                           id: suggetionList[index].id.toString(),
                         );
                       });
+                  favouritesAudioListUpdate = false;
+                  playlistAudioListUpdate = false;
                 },
               ),
               onTap: () async {
@@ -172,6 +176,8 @@ class MusicSearch extends SearchDelegate {
                       await createAudiosFileList(suggetionList);
                       audioPlayer.playlistPlayAtIndex(index);
                       miniPlayerVisibility.value = true;
+                      favouritesAudioListUpdate = false;
+                      playlistAudioListUpdate = false;
 
                       // ignore: use_build_context_synchronously
                       await Navigator.push(

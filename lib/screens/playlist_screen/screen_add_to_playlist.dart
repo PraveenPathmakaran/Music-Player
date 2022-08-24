@@ -45,39 +45,51 @@ class SreenAddToPlaylist extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                          leading: CircleAvatar(
-                            radius: 35,
-                            backgroundColor: Colors.transparent,
-                            backgroundImage:
-                                AssetImage('assets/images/musicIcon1.png'),
-                          ),
-                          title: Text(
-                            allAudioListFromDB[index].title.toString(),
-                            maxLines: 1,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                          subtitle: Text(
-                            allAudioListFromDB[index].artist.toString(),
-                            maxLines: 1,
-                            style: TextStyle(color: Colors.white, fontSize: 10),
-                          ),
-                          trailing: IconButton(
-                            icon: playlistSongsFromDB.value
-                                    .contains(allAudioListFromDB[index])
-                                ? functionIcon(Icons.remove, 20, Colors.white)
-                                : functionIcon(Icons.add, 20, Colors.white),
-                            onPressed: () async {
-                              tempPlaylistId.contains(
-                                      allAudioListFromDB[index].id.toString())
-                                  ? await playlistSongDelete(
-                                      allAudioListFromDB[index].id.toString(),
-                                      playlistname)
-                                  : await addtoPlaylistSongs(
-                                      allAudioListFromDB[index].id.toString(),
-                                      playlistname);
-                              await keyUpdate();
-                            },
-                          )),
+                        leading: CircleAvatar(
+                          radius: 35,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage:
+                              AssetImage('assets/images/musicIcon1.png'),
+                        ),
+                        title: Text(
+                          allAudioListFromDB[index].title.toString(),
+                          maxLines: 1,
+                          style: TextStyle(color: Colors.white, fontSize: 15),
+                        ),
+                        subtitle: Text(
+                          allAudioListFromDB[index].artist.toString(),
+                          maxLines: 1,
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                        trailing: IconButton(
+                          icon: playlistSongsFromDB.value
+                                  .contains(allAudioListFromDB[index])
+                              ? functionIcon(Icons.remove, 20, Colors.white)
+                              : functionIcon(Icons.add, 20, Colors.white),
+                          onPressed: () async {
+                            if (tempPlaylistId.contains(
+                                allAudioListFromDB[index].id.toString())) {
+                              if (playlistAudioListUpdate) {
+                                audioPlayer.playlist!.audios.removeWhere(
+                                    (element) =>
+                                        element.metas.id ==
+                                        allAudioListFromDB[index]
+                                            .id
+                                            .toString());
+                              }
+                              await playlistSongDelete(
+                                  allAudioListFromDB[index].id.toString(),
+                                  playlistname);
+                            } else {
+                              await addtoPlaylistSongs(
+                                  allAudioListFromDB[index].id.toString(),
+                                  playlistname);
+                            }
+
+                            await keyUpdate();
+                          },
+                        ),
+                      ),
                     );
                   }),
                   itemCount: allAudioListFromDB.length,

@@ -1,20 +1,30 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:musicplayer/screens/home_screen/screen_home.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist.dart';
 import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../../main.dart';
 import '../favourite_screen/favourites_functions.dart';
+import '../favourite_screen/screen_favourite.dart';
 import '../play_screen/screen_play.dart';
+import '../playlist_screen/screen_playlist_songs.dart';
 import '../splash_screen/screen_splash.dart';
 
-class ScreenHome extends StatelessWidget {
+class ScreenHome extends StatefulWidget {
   const ScreenHome({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context, {bool mounted = true}) {
+  State<ScreenHome> createState() => _ScreenHomeState();
+}
+
+class _ScreenHomeState extends State<ScreenHome>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  Widget build(BuildContext context) {
+    super.build(context);
     loopButton.value = true;
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -44,6 +54,8 @@ class ScreenHome extends StatelessWidget {
                         ),
                       );
                       miniPlayerVisibility.value = true;
+                      favouritesAudioListUpdate = false;
+                      playlistAudioListUpdate = false;
                     },
                     leading: CircleAvatar(
                       radius: 28,
@@ -91,6 +103,9 @@ class ScreenHome extends StatelessWidget {
       ),
     );
   }
+
+  @override
+  bool get wantKeepAlive => true;
 }
 
 class DrawerContent extends StatelessWidget {
@@ -192,17 +207,28 @@ class DrawerContent extends StatelessWidget {
 
 class HomeBottomSheet extends StatelessWidget {
   final String id;
-  const HomeBottomSheet({Key? key, required this.id}) : super(key: key);
+  final int? index;
+  const HomeBottomSheet({Key? key, required this.id, this.index})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         TextButton(
-            onPressed: () {
-              tempFavouriteList.contains(id)
-                  ? favouritesRemove(id)
-                  : addFavouritesToDB(id);
+            onPressed: () async {
+              if (tempFavouriteList.contains(id)) {
+                if (tabController.index == 1 &&
+                    audioPlayer.playlist!.audios.isNotEmpty &&
+                    favouritesAudioListUpdate) {
+                  audioPlayer.playlist!.audios
+                      .removeWhere((element) => element.metas.id == id);
+                }
+                await favouritesRemove(id);
+              } else {
+                await addFavouritesToDB(id);
+              }
+
               Navigator.pop(context);
               tempFavouriteList.contains(id)
                   ? snackBar("Added to favourites", backgroundColor2, context)
@@ -212,8 +238,8 @@ class HomeBottomSheet extends StatelessWidget {
               valueListenable: favouritesListFromDb,
               builder: (context, value, child) {
                 return tempFavouriteList.contains(id)
-                    ? functionText(
-                        "Favourites Remove", Colors.white, FontWeight.bold, 20)
+                    ? functionText("Remove From Favourites", Colors.white,
+                        FontWeight.bold, 20)
                     : functionText(
                         "Add to Favourites", Colors.white, FontWeight.bold, 20);
               },

@@ -1,15 +1,19 @@
 // ignore_for_file: prefer_const_constructors
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
+import 'package:musicplayer/screens/home_screen/screen_home.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_add_to_playlist.dart';
 import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../../model/music_model.dart';
 import '../favourite_screen/favourites_functions.dart';
+import '../favourite_screen/screen_favourite.dart';
+import '../home_screen/home_widgets.dart';
 import '../play_screen/screen_play.dart';
 import '../splash_screen/screen_splash.dart';
 import 'playlist_functions.dart';
 
+bool playlistAudioListUpdate = false; //favourite list remove option
 ValueNotifier<List<MusicModel>> playlistSongsFromDB = ValueNotifier([]);
 List<String> tempPlaylistId = [];
 
@@ -76,6 +80,8 @@ class ScreenPlaylistAudios extends StatelessWidget {
                                 }),
                               );
                               miniPlayerVisibility.value = true;
+                              favouritesAudioListUpdate = false;
+                              playlistAudioListUpdate = true;
                             },
                             leading: CircleAvatar(
                               radius: 20,
@@ -115,6 +121,14 @@ class ScreenPlaylistAudios extends StatelessWidget {
                                         children: [
                                           TextButton(
                                               onPressed: () {
+                                                if (playlistAudioListUpdate) {
+                                                  audioPlayer.playlist!.audios
+                                                      .removeWhere((element) =>
+                                                          element.metas.id ==
+                                                          playlistSongsFromDB
+                                                              .value[index].id
+                                                              .toString());
+                                                }
                                                 playlistSongDelete(
                                                     playlistSongsFromDB
                                                         .value[index].id

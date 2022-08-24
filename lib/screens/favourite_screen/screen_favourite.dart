@@ -4,6 +4,9 @@ import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
 import '../home_screen/home_widgets.dart';
 import '../play_screen/screen_play.dart';
+import '../playlist_screen/screen_playlist_songs.dart';
+
+bool favouritesAudioListUpdate = false; //favourite list remove option
 
 class ScreenFavourite extends StatelessWidget {
   const ScreenFavourite({Key? key}) : super(key: key);
@@ -40,6 +43,8 @@ class ScreenFavourite extends StatelessWidget {
                       ),
                     );
                     miniPlayerVisibility.value = true;
+                    favouritesAudioListUpdate = true;
+                    playlistAudioListUpdate = false;
                   },
                   leading: const CircleAvatar(
                     radius: 20,
@@ -73,6 +78,7 @@ class ScreenFavourite extends StatelessWidget {
                               child: HomeBottomSheet(
                                 id: favouritesListFromDb.value[index].id
                                     .toString(),
+                                index: index,
                               ),
                             );
                           });
