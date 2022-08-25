@@ -82,23 +82,21 @@ class MusicSearch extends SearchDelegate {
                 },
               ),
               onTap: () async {
-                await createAudiosFileList(allAudioListFromDB);
-                final index1 = allAudioListFromDB.indexWhere((element) =>
-                    element.id == suggetionList[index].id.toString());
+                await createAudiosFileList(suggetionList);
+                audioPlayer.playlistPlayAtIndex(index);
+                miniPlayerVisibility.value = true;
+                favouritesAudioListUpdate = false;
+                playlistAudioListUpdate = false;
 
-                if (index1 >= 0) {
-                  audioPlayer.playlistPlayAtIndex(index1);
-                  // ignore: use_build_context_synchronously
-                  await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return const ScreenPlay();
-                      },
-                    ),
-                  );
-                  miniPlayerVisibility.value = true;
-                }
+                // ignore: use_build_context_synchronously
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const ScreenPlay();
+                    },
+                  ),
+                );
               },
             ),
           );

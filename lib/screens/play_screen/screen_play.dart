@@ -50,6 +50,9 @@ class PlayContainer extends StatelessWidget {
             backgroundImage: AssetImage('assets/images/songsImage.png'),
             radius: 130,
           ),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.03,
+          ),
           Container(
             margin: const EdgeInsets.fromLTRB(0, 10, 0, 7),
             child: functionText(
@@ -58,18 +61,6 @@ class PlayContainer extends StatelessWidget {
                 Colors.white,
                 FontWeight.w600,
                 16),
-          ),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.03,
-          ),
-          Container(
-            margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-            child: functionText(
-                realtimePlayingInfos1!.current!.audio.audio.metas.artist
-                    .toString(),
-                Colors.white,
-                FontWeight.w500,
-                12.5),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,

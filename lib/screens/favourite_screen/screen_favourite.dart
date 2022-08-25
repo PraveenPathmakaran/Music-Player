@@ -13,8 +13,6 @@ class ScreenFavourite extends StatelessWidget {
 
   @override
   Widget build(BuildContext context, {bool mounted = true}) {
-    loopButton.value = true;
-
     return ValueListenableBuilder(
       valueListenable: favouritesListFromDb,
       builder: (context, value, child) {

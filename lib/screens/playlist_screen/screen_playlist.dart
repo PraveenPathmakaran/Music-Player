@@ -5,8 +5,6 @@ import 'package:musicplayer/screens/playlist_screen/playlist_functions.dart';
 import 'package:musicplayer/screens/playlist_screen/playlist_widgets.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist_songs.dart';
 
-import '../play_screen/screen_play.dart';
-
 ScrollController controller1 = ScrollController();
 
 class ScreenPlaylist extends StatelessWidget {
@@ -15,7 +13,7 @@ class ScreenPlaylist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     keyUpdate();
-    loopButton.value = true;
+
     return ValueListenableBuilder(
       valueListenable: allkey,
       builder: (context, value, child) {

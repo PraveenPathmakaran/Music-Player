@@ -20,7 +20,6 @@ class ScreenPlaylistAudios extends StatelessWidget {
 
   @override
   Widget build(BuildContext context, {bool mounted = true}) {
-    loopButton.value = true;
     return ValueListenableBuilder(
         valueListenable: playlistSongsFromDB,
         builder: (context, value, child) {

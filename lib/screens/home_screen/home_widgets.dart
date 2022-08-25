@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:musicplayer/screens/home_screen/screen_home.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist.dart';
 import '../../functions/audio_functions.dart';
 import '../../functions/design_widgets.dart';
@@ -23,7 +22,6 @@ class _ScreenHomeState extends State<ScreenHome>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    loopButton.value = true;
     return allAudioListFromDB.isEmpty
         ? Container(
             color: Colors.black,
