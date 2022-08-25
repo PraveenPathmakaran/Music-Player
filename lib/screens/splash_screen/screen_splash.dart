@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:collection';
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,3 @@
-//dialogue box for creating playlist in playlist screen
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:musicplayer/screens/playlist_screen/playlist_functions.dart';
 import '../../functions/design_widgets.dart';
@@ -16,7 +13,7 @@ Future openDialog(BuildContext context) async {
           title: functionText(
               'Create Playlist', Colors.white, FontWeight.normal, 20),
           content: TextField(
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             cursorColor: Colors.white,
             controller: playlistTextController,
             autofocus: true,
@@ -30,7 +27,8 @@ Future openDialog(BuildContext context) async {
               onPressed: () async {
                 Navigator.of(ctx).pop();
               },
-              child: Text('Cancel', style: TextStyle(color: Colors.white)),
+              child:
+                  const Text('Cancel', style: TextStyle(color: Colors.white)),
             ),
             TextButton(
               onPressed: () {
@@ -44,7 +42,7 @@ Future openDialog(BuildContext context) async {
                   Navigator.of(ctx).pop();
                 }
               },
-              child: Text(
+              child: const Text(
                 'Create',
                 style: TextStyle(color: Colors.white),
               ),
@@ -64,13 +62,12 @@ Future updatePlaylistName(BuildContext context, String playlistName) async {
           title: functionText(
               'Update Playlist Name', Colors.white, FontWeight.normal, 20),
           content: TextFormField(
-            initialValue: playlistName == null ? "haii" : playlistName,
+            initialValue: playlistName,
             onChanged: (value) {
               value1 = value;
             },
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
             cursorColor: Colors.white,
-            //controller: playlistTextController,
             autofocus: true,
             decoration: InputDecoration(
                 focusedBorder: UnderlineInputBorder(
@@ -81,17 +78,19 @@ Future updatePlaylistName(BuildContext context, String playlistName) async {
               onPressed: () async {
                 Navigator.of(ctx).pop();
               },
-              child: Text('Cancel', style: TextStyle(color: Colors.white)),
+              child:
+                  const Text('Cancel', style: TextStyle(color: Colors.white)),
             ),
             TextButton(
               onPressed: () async {
+                Navigator.pop(ctx);
                 Navigator.pop(context);
                 if (value1 == "") {
                   return;
                 }
                 await playlistNameUpdate(playlistName, value1);
               },
-              child: Text(
+              child: const Text(
                 'Update',
                 style: TextStyle(color: Colors.white),
               ),

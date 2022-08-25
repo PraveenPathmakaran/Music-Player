@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:musicplayer/screens/playlist_screen/playlist_functions.dart';
 import 'package:musicplayer/screens/playlist_screen/screen_playlist_songs.dart';
@@ -18,10 +16,10 @@ class SreenAddToPlaylist extends StatelessWidget {
         builder: (context, value, child) {
           return SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Column(children: [
                 Container(
-                  padding: EdgeInsets.only(left: 8, right: 8),
+                  padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -45,7 +43,7 @@ class SreenAddToPlaylist extends StatelessWidget {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: ListTile(
-                        leading: CircleAvatar(
+                        leading: const CircleAvatar(
                           radius: 35,
                           backgroundColor: Colors.transparent,
                           backgroundImage:
@@ -54,12 +52,14 @@ class SreenAddToPlaylist extends StatelessWidget {
                         title: Text(
                           allAudioListFromDB[index].title.toString(),
                           maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 15),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 15),
                         ),
                         subtitle: Text(
                           allAudioListFromDB[index].artist.toString(),
                           maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 10),
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 10),
                         ),
                         trailing: IconButton(
                           icon: playlistSongsFromDB.value
@@ -67,25 +67,14 @@ class SreenAddToPlaylist extends StatelessWidget {
                               ? functionIcon(Icons.remove, 20, Colors.white)
                               : functionIcon(Icons.add, 20, Colors.white),
                           onPressed: () async {
-                            if (tempPlaylistId.contains(
-                                allAudioListFromDB[index].id.toString())) {
-                              if (playlistAudioListUpdate) {
-                                audioPlayer.playlist!.audios.removeWhere(
-                                    (element) =>
-                                        element.metas.id ==
-                                        allAudioListFromDB[index]
-                                            .id
-                                            .toString());
-                              }
-                              await playlistSongDelete(
-                                  allAudioListFromDB[index].id.toString(),
-                                  playlistname);
-                            } else {
-                              await addtoPlaylistSongs(
-                                  allAudioListFromDB[index].id.toString(),
-                                  playlistname);
-                            }
-
+                            tempPlaylistId.contains(
+                                    allAudioListFromDB[index].id.toString())
+                                ? await playlistSongDelete(
+                                    allAudioListFromDB[index].id.toString(),
+                                    playlistname)
+                                : await addtoPlaylistSongs(
+                                    allAudioListFromDB[index].id.toString(),
+                                    playlistname);
                             await keyUpdate();
                           },
                         ),

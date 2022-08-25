@@ -1,8 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import '../../functions/design_widgets.dart';
-import '../home_screen/home_widgets.dart';
 import '../splash_screen/screen_splash.dart';
 import 'favourites_functions.dart';
 import 'screen_favourite.dart';
@@ -14,11 +11,11 @@ class ScreenAddToFavourits extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Container(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(left: 8, right: 8),
+              padding: const EdgeInsets.only(left: 8, right: 8),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -45,7 +42,7 @@ class ScreenAddToFavourits extends StatelessWidget {
                         ),
                         color: colorListTile,
                         child: ListTile(
-                          leading: CircleAvatar(
+                          leading: const CircleAvatar(
                             radius: 35,
                             backgroundColor: Colors.transparent,
                             backgroundImage:
@@ -54,12 +51,14 @@ class ScreenAddToFavourits extends StatelessWidget {
                           title: Text(
                             allAudioListFromDB[index].title.toString(),
                             maxLines: 1,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 15),
                           ),
                           subtitle: Text(
                             allAudioListFromDB[index].artist.toString(),
                             maxLines: 1,
-                            style: TextStyle(color: Colors.white, fontSize: 10),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10),
                           ),
                           trailing: IconButton(
                             icon: favouritesListFromDb.value
@@ -67,31 +66,12 @@ class ScreenAddToFavourits extends StatelessWidget {
                                 ? functionIcon(Icons.remove, 20, Colors.white)
                                 : functionIcon(Icons.add, 20, Colors.white),
                             onPressed: () async {
-                              //song play time music stopping fixed directly remove from audioplaylist
-                              if (tempFavouriteList.contains(
-                                  allAudioListFromDB[index].id.toString())) {
-                                if (audioPlayer.playlist!.audios.isNotEmpty &&
-                                    favouritesAudioListUpdate) {
-                                  audioPlayer.playlist!.audios.removeWhere(
-                                      (element) =>
-                                          element.metas.id ==
-                                          allAudioListFromDB[index]
-                                              .id
-                                              .toString());
-                                }
-                                await favouritesRemove(
-                                    allAudioListFromDB[index].id.toString());
-                              } else {
-                                await addFavouritesToDB(
-                                    allAudioListFromDB[index].id.toString());
-                              }
-
-                              // tempFavouriteList.contains(
-                              //         allAudioListFromDB[index].id.toString())
-                              //     ? await favouritesRemove(
-                              //         allAudioListFromDB[index].id.toString())
-                              //     : await addFavouritesToDB(
-                              //         allAudioListFromDB[index].id.toString());
+                              tempFavouriteList.contains(
+                                      allAudioListFromDB[index].id.toString())
+                                  ? await favouritesRemove(
+                                      allAudioListFromDB[index].id.toString())
+                                  : await addFavouritesToDB(
+                                      allAudioListFromDB[index].id.toString());
                             },
                           ),
                         ),

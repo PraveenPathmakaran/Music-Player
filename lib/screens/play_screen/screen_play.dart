@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, sort_child_properties_last, prefer_const_literals_to_create_immutables
-
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
 import 'package:musicplayer/functions/design_widgets.dart';
@@ -22,12 +20,13 @@ class ScreenPlay extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.black,
         elevation: 0,
-        title: Text('Now Playing'),
+        title: const Text('Now Playing'),
         centerTitle: true,
       ),
       body: audioPlayer.builderRealtimePlayingInfos(
           builder: (contex, realtimePlayingInfos) {
         realtimePlayingInfos1 = realtimePlayingInfos;
+        // ignore: prefer_const_constructors
         return PlayContainer();
       }),
     );
@@ -46,13 +45,13 @@ class PlayContainer extends StatelessWidget {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.07,
           ),
-          CircleAvatar(
+          const CircleAvatar(
             backgroundColor: Colors.transparent,
             backgroundImage: AssetImage('assets/images/songsImage.png'),
             radius: 130,
           ),
           Container(
-            margin: EdgeInsets.fromLTRB(0, 10, 0, 7),
+            margin: const EdgeInsets.fromLTRB(0, 10, 0, 7),
             child: functionText(
                 realtimePlayingInfos1!.current!.audio.audio.metas.title
                     .toString(),
@@ -64,17 +63,14 @@ class PlayContainer extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.03,
           ),
           Container(
-              margin: EdgeInsets.fromLTRB(0, 0, 0, 15),
-              child: Text(
+            margin: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+            child: functionText(
                 realtimePlayingInfos1!.current!.audio.audio.metas.artist
                     .toString(),
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.5,
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.ellipsis),
-                maxLines: 1,
-              )),
+                Colors.white,
+                FontWeight.w500,
+                12.5),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
@@ -127,7 +123,7 @@ class PlayContainer extends StatelessWidget {
                     showModalBottomSheet(
                         backgroundColor: backgroundColor2,
                         context: context,
-                        shape: RoundedRectangleBorder(
+                        shape: const RoundedRectangleBorder(
                           borderRadius: BorderRadius.vertical(
                             top: Radius.circular(30),
                           ),
@@ -149,50 +145,47 @@ class PlayContainer extends StatelessWidget {
           slider(realtimePlayingInfos1!),
           Container(
             transform: Matrix4.translationValues(0, -5, 0),
-            margin: EdgeInsets.fromLTRB(5, 0, 5, 15),
+            margin: const EdgeInsets.fromLTRB(5, 0, 5, 15),
             child: timeStamps(realtimePlayingInfos1!),
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.03,
           ),
-          Container(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                GestureDetector(
-                  child: functionIcon(Icons.skip_previous, 55, Colors.white),
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () async {
-                    if (songSkip) {
-                      songSkip = false;
-                      await audioPlayer.previous();
-                      songSkip = true;
-                    }
-                  },
-                ),
-                GestureDetector(
-                  child: realtimePlayingInfos1!.isPlaying
-                      ? functionIcon(Icons.pause, 55, Colors.white)
-                      : functionIcon(
-                          Icons.play_arrow_rounded, 55, Colors.white),
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () {
-                    audioPlayer.playOrPause();
-                  },
-                ),
-                GestureDetector(
-                  child: functionIcon(Icons.skip_next, 55, Colors.white),
-                  behavior: HitTestBehavior.translucent,
-                  onTap: () async {
-                    if (songSkip) {
-                      songSkip = false;
-                      await audioPlayer.next();
-                      songSkip = true;
-                    }
-                  },
-                ),
-              ],
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () async {
+                  if (songSkip) {
+                    songSkip = false;
+                    await audioPlayer.previous();
+                    songSkip = true;
+                  }
+                },
+                child: functionIcon(Icons.skip_previous, 55, Colors.white),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () {
+                  audioPlayer.playOrPause();
+                },
+                child: realtimePlayingInfos1!.isPlaying
+                    ? functionIcon(Icons.pause, 55, Colors.white)
+                    : functionIcon(Icons.play_arrow_rounded, 55, Colors.white),
+              ),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: () async {
+                  if (songSkip) {
+                    songSkip = false;
+                    await audioPlayer.next();
+                    songSkip = true;
+                  }
+                },
+                child: functionIcon(Icons.skip_next, 55, Colors.white),
+              ),
+            ],
           )
         ],
       ),

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:musicplayer/model/music_model.dart';
@@ -23,7 +21,7 @@ Future<void> main() async {
   PackageInfo packageInfos = await PackageInfo.fromPlatform();
   packageInfo = packageInfos;
 
-  runApp(MusicApp());
+  runApp(const MusicApp());
 }
 
 class MusicApp extends StatefulWidget {
@@ -43,7 +41,7 @@ class _MusicAppState extends State<MusicApp> {
         hoverColor: Colors.transparent,
       ),
       debugShowCheckedModeBanner: false,
-      home: ScreenSplash(),
+      home: const ScreenSplash(),
     );
   }
 }

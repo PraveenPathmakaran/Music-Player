@@ -1,17 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:flutter/material.dart';
-import 'package:musicplayer/screens/favourite_screen/screen_favourite.dart';
-import 'package:musicplayer/screens/playlist_screen/screen_playlist.dart';
 import '../screens/play_screen/screen_play.dart';
 import '../screens/splash_screen/screen_splash.dart';
 
-Color backgroundColor1 = Color(0xFF2C3639);
-Color backgroundColor2 = Color(0xFF1e1c1d);
-Color appbarColor = Color(0xff0B2840);
-Color colorListTile = Color(0xFF14202E);
+Color backgroundColor1 = const Color(0xFF2C3639);
+Color backgroundColor2 = const Color(0xFF1e1c1d);
+Color appbarColor = const Color(0xff0B2840);
+Color colorListTile = const Color(0xFF14202E);
 Color whiteColor = Colors.white;
-Color roseColor = Color(0xFFaf1337);
+Color roseColor = const Color(0xFFaf1337);
 ValueNotifier<bool> notification = ValueNotifier(true);
 
 double screenHeight = 0;
@@ -43,14 +40,6 @@ Widget functionIcon(IconData icon1, double iconSize, Color iconColor) {
   );
 }
 
-//sized box
-Widget functionSizedBox(double width, double height) {
-  return SizedBox(
-    width: width,
-    height: height,
-  );
-}
-
 //text function
 Widget functionTextButton(Function() textFunction, String text) {
   return TextButton(
@@ -69,24 +58,6 @@ Widget functionTextButton(Function() textFunction, String text) {
   );
 }
 
-//common color container
-Widget functionContainer(Widget widgett) {
-  return Container(
-    decoration: BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          Color(0xFF2C3639),
-          Color(0xFF1e1c1d),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomLeft,
-      ),
-    ),
-    child: widgett,
-  );
-}
-//------------------------------------------------end
-
 Widget miniPlayer(BuildContext context) {
   return Visibility(
     visible: miniPlayerVisibility.value,
@@ -99,9 +70,9 @@ Widget miniPlayer(BuildContext context) {
         ),
         child: ListTile(
           tileColor: Colors.transparent,
-          onTap: () => Navigator.of(context)
-              .push(MaterialPageRoute(builder: ((context) => ScreenPlay()))),
-          leading: CircleAvatar(
+          onTap: () => Navigator.of(context).push(
+              MaterialPageRoute(builder: ((context) => const ScreenPlay()))),
+          leading: const CircleAvatar(
             radius: 30,
             backgroundColor: Colors.transparent,
             backgroundImage: AssetImage('assets/images/musicIcon1.png'),
@@ -109,12 +80,12 @@ Widget miniPlayer(BuildContext context) {
           title: Text(
             realtimePlayingInfos.current!.audio.audio.metas.title.toString(),
             maxLines: 1,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           subtitle: Text(
             realtimePlayingInfos.current!.audio.audio.metas.title.toString(),
             maxLines: 1,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
           trailing: Row(mainAxisSize: MainAxisSize.min, children: [
             IconButton(
@@ -151,29 +122,13 @@ Widget miniPlayer(BuildContext context) {
   );
 }
 
-void showModalSheetFavourite(BuildContext context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return ScreenFavourite();
-      });
-}
-
-void showModalSheetPlaylist(BuildContext context) {
-  showModalBottomSheet(
-      context: context,
-      builder: (builder) {
-        return ScreenPlaylist();
-      });
-}
-
 //------------------------------playscreen slider
 
 Widget slider(RealtimePlayingInfos realtimePlayingInfos) {
   return Stack(
     children: [
       SliderTheme(
-        data: SliderThemeData(
+        data: const SliderThemeData(
             thumbColor: Colors.white,
             activeTrackColor: Color(0xffe45923),
             inactiveTrackColor: Colors.grey,
@@ -187,7 +142,7 @@ Widget slider(RealtimePlayingInfos realtimePlayingInfos) {
           min: 0,
           onChanged: ((value) {
             if (value <= 0) {
-              audioPlayer.seek(Duration(seconds: 0));
+              audioPlayer.seek(const Duration(seconds: 0));
             } else if (value >= realtimePlayingInfos.duration.inSeconds) {
               audioPlayer.seek(realtimePlayingInfos.duration);
             } else {
@@ -208,14 +163,14 @@ Widget timeStamps(RealtimePlayingInfos realtimePlayingInfos) {
       children: [
         Text(
           transformString(realtimePlayingInfos.currentPosition.inSeconds),
-          style: TextStyle(color: Colors.grey),
+          style: const TextStyle(color: Colors.grey),
         ),
         SizedBox(
           width: screenWidth * 0.7,
         ),
         Text(
           transformString(realtimePlayingInfos.duration.inSeconds),
-          style: TextStyle(color: Colors.grey),
+          style: const TextStyle(color: Colors.grey),
         ),
       ],
     ),
@@ -233,7 +188,7 @@ String transformString(int seconds) {
 void snackBar(String content, Color color, BuildContext context) {
   final snackBar = SnackBar(
     content: Text(content),
-    duration: Duration(seconds: 1),
+    duration: const Duration(seconds: 1),
     backgroundColor: color,
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

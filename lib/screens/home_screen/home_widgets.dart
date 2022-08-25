@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors, avoid_unnecessary_containers, prefer_const_literals_to_create_immutables, use_build_context_synchronously
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:musicplayer/screens/home_screen/screen_home.dart';
@@ -26,82 +24,95 @@ class _ScreenHomeState extends State<ScreenHome>
   Widget build(BuildContext context) {
     super.build(context);
     loopButton.value = true;
-    return Container(
-      padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      color: Colors.black,
-      child: SingleChildScrollView(
-        child: Column(children: [
-          ListView.builder(
-            controller: ScrollController(),
-            itemBuilder: ((context, index) {
-              return Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15.0),
-                ),
-                margin: EdgeInsets.all(3),
-                color: Color(0xFF14202E),
-                child: ListTile(
-                    onTap: () async {
-                      await createAudiosFileList(allAudioListFromDB);
-                      await audioPlayer.playlistPlayAtIndex(index);
-                      if (!mounted) return;
-                      await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            return ScreenPlay();
-                          },
-                        ),
-                      );
-                      miniPlayerVisibility.value = true;
-                      favouritesAudioListUpdate = false;
-                      playlistAudioListUpdate = false;
-                    },
-                    leading: CircleAvatar(
-                      radius: 28,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage:
-                          AssetImage('assets/images/musicIcon1.png'),
-                    ),
-                    title: Text(
-                      allAudioListFromDB[index].title.toString(),
-                      maxLines: 1,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
-                    ),
-                    subtitle: Text(
-                      allAudioListFromDB[index].artist.toString(),
-                      maxLines: 1,
-                      style: TextStyle(color: Colors.white, fontSize: 10),
-                    ),
-                    trailing: IconButton(
-                      icon: functionIcon(Icons.more_vert, 20, Colors.white),
-                      onPressed: () {
-                        showModalBottomSheet(
-                            backgroundColor: appbarColor,
-                            context: context,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.vertical(
-                                top: Radius.circular(30),
+    return allAudioListFromDB.isEmpty
+        ? Container(
+            color: Colors.black,
+            child: Center(
+              child: functionText(
+                  "No Songs Found", Colors.white, FontWeight.bold, 20),
+            ),
+          )
+        : Container(
+            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+            color: Colors.black,
+            child: SingleChildScrollView(
+              child: Column(children: [
+                ListView.builder(
+                  controller: ScrollController(),
+                  itemBuilder: ((context, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(15.0),
+                      ),
+                      margin: const EdgeInsets.all(3),
+                      color: const Color(0xFF14202E),
+                      child: ListTile(
+                          onTap: () async {
+                            await createAudiosFileList(allAudioListFromDB);
+                            await audioPlayer.playlistPlayAtIndex(index);
+                            if (!mounted) return;
+                            await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return const ScreenPlay();
+                                },
                               ),
-                            ),
-                            builder: (ctx) {
-                              return SizedBox(
-                                height: 300,
-                                child: HomeBottomSheet(
-                                  id: allAudioListFromDB[index].id.toString(),
-                                ),
-                              );
-                            });
-                      },
-                    )),
-              );
-            }),
-            itemCount: allAudioListFromDB.length,
-            shrinkWrap: true,
-          ),
-        ]),
-      ),
-    );
+                            );
+                            miniPlayerVisibility.value = true;
+                            favouritesAudioListUpdate = false;
+                            playlistAudioListUpdate = false;
+                          },
+                          leading: const CircleAvatar(
+                            radius: 28,
+                            backgroundColor: Colors.transparent,
+                            backgroundImage:
+                                AssetImage('assets/images/musicIcon1.png'),
+                          ),
+                          title: Text(
+                            allAudioListFromDB[index].title.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 15),
+                          ),
+                          subtitle: Text(
+                            allAudioListFromDB[index].artist.toString(),
+                            maxLines: 1,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 10),
+                          ),
+                          trailing: IconButton(
+                            icon:
+                                functionIcon(Icons.more_vert, 20, Colors.white),
+                            onPressed: () {
+                              showModalBottomSheet(
+                                  backgroundColor: appbarColor,
+                                  context: context,
+                                  shape: const RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.vertical(
+                                      top: Radius.circular(30),
+                                    ),
+                                  ),
+                                  builder: (ctx) {
+                                    return SizedBox(
+                                      height: 300,
+                                      child: HomeBottomSheet(
+                                        id: allAudioListFromDB[index]
+                                            .id
+                                            .toString(),
+                                      ),
+                                    );
+                                  });
+                            },
+                          )),
+                    );
+                  }),
+                  itemCount: allAudioListFromDB.length,
+                  shrinkWrap: true,
+                ),
+              ]),
+            ),
+          );
   }
 
   @override
@@ -128,7 +139,9 @@ class DrawerContent extends StatelessWidget {
                   height: height * 0.01,
                 ),
                 functionText('Music Player', whiteColor, FontWeight.bold, 25),
-                functionSizedBox(0, 50),
+                const SizedBox(
+                  height: 50,
+                ),
                 Row(
                   children: [
                     functionTextButton(() {}, 'Notifications'),
@@ -155,11 +168,11 @@ class DrawerContent extends StatelessWidget {
                       context: context,
                       builder: (context) {
                         return AlertDialog(
-                          titlePadding: EdgeInsets.all(12),
+                          titlePadding: const EdgeInsets.all(12),
                           title: ListTile(
-                            contentPadding: EdgeInsets.all(0),
+                            contentPadding: const EdgeInsets.all(0),
                             minVerticalPadding: 0,
-                            leading: CircleAvatar(
+                            leading: const CircleAvatar(
                               radius: 20,
                               backgroundColor: Colors.transparent,
                               backgroundImage:
@@ -167,7 +180,7 @@ class DrawerContent extends StatelessWidget {
                             ),
                             title: functionText("Play\nMusic Player",
                                 Colors.black, FontWeight.bold, 20),
-                            subtitle: Text(
+                            subtitle: const Text(
                                 "It is a Ad free Music player Play all local storage musics"),
                           ),
                           actions: [
@@ -175,19 +188,39 @@ class DrawerContent extends StatelessWidget {
                               onPressed: () {
                                 showLicensePage(context: context);
                               },
-                              child: Text("View License"),
+                              child: const Text("View License"),
                             ),
                             TextButton(
                                 onPressed: () {
                                   Navigator.pop(context);
                                 },
-                                child: Text("Close"))
+                                child: const Text("Close"))
                           ],
                         );
                       });
                 }, 'About'),
                 functionTextButton(() {
-                  SystemNavigator.pop();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Really"),
+                        content: const Text("Do you want to close the app?"),
+                        actions: <Widget>[
+                          TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(false);
+                              },
+                              child: const Text("No")),
+                          TextButton(
+                              onPressed: () {
+                                SystemNavigator.pop();
+                              },
+                              child: const Text("Yes"))
+                        ],
+                      );
+                    },
+                  );
                 }, 'Exit'),
               ],
             ),
@@ -212,23 +245,41 @@ class HomeBottomSheet extends StatelessWidget {
       : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, {bool value = true}) {
     return Column(
       children: [
+        Container(
+          padding: const EdgeInsets.only(left: 8, right: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              functionText("", Colors.white, FontWeight.bold, 18),
+              TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child:
+                      functionText("Close", Colors.white, FontWeight.bold, 18))
+            ],
+          ),
+        ),
         TextButton(
             onPressed: () async {
-              if (tempFavouriteList.contains(id)) {
-                if (tabController.index == 1 &&
-                    audioPlayer.playlist!.audios.isNotEmpty &&
-                    favouritesAudioListUpdate) {
-                  audioPlayer.playlist!.audios
-                      .removeWhere((element) => element.metas.id == id);
-                }
-                await favouritesRemove(id);
-              } else {
-                await addFavouritesToDB(id);
-              }
-
+              // if (tempFavouriteList.contains(id)) {
+              //   if (tabController.index == 1 &&
+              //       audioPlayer.playlist!.audios.isNotEmpty &&
+              //       favouritesAudioListUpdate) {
+              //     audioPlayer.playlist!.audios
+              //         .removeWhere((element) => element.metas.id == id);
+              //   }
+              //   await favouritesRemove(id);
+              // } else {
+              //   await addFavouritesToDB(id);
+              // }
+              tempFavouriteList.contains(id)
+                  ? favouritesRemove(id)
+                  : addFavouritesToDB(id);
+              if (!value) {}
               Navigator.pop(context);
               tempFavouriteList.contains(id)
                   ? snackBar("Added to favourites", backgroundColor2, context)
@@ -246,13 +297,13 @@ class HomeBottomSheet extends StatelessWidget {
             )),
         TextButton(
           child: functionText(
-              "Add to Playist ", Colors.white, FontWeight.bold, 20),
+              "Add to Playlist ", Colors.white, FontWeight.bold, 20),
           onPressed: () {
             Navigator.pop(context);
             showModalBottomSheet(
                 backgroundColor: appbarColor,
                 context: context,
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(
                     top: Radius.circular(30),
                   ),

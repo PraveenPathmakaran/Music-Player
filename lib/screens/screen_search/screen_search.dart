@@ -1,8 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:musicplayer/functions/audio_functions.dart';
-
 import '../../functions/design_widgets.dart';
 import '../favourite_screen/screen_favourite.dart';
 import '../home_screen/home_widgets.dart';
@@ -39,7 +36,7 @@ class MusicSearch extends SearchDelegate {
         .toList();
     return Container(
       color: Colors.black,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       child: ListView.builder(
         itemCount: suggetionList.length,
         itemBuilder: (BuildContext context, int index) {
@@ -57,12 +54,12 @@ class MusicSearch extends SearchDelegate {
               title: Text(
                 suggetionList[index].title.toString(),
                 maxLines: 1,
-                style: TextStyle(color: Colors.white, fontSize: 15),
+                style: const TextStyle(color: Colors.white, fontSize: 15),
               ),
               subtitle: Text(
                 suggetionList[index].artist.toString(),
                 maxLines: 1,
-                style: TextStyle(color: Colors.white, fontSize: 10),
+                style: const TextStyle(color: Colors.white, fontSize: 10),
               ),
               trailing: IconButton(
                 icon: functionIcon(Icons.more_horiz, 20, Colors.white),
@@ -119,7 +116,7 @@ class MusicSearch extends SearchDelegate {
     return suggetionList.isEmpty
         ? Container(
             color: Colors.black,
-            child: Center(
+            child: const Center(
               child: Text(
                 'No Results Found',
                 style: TextStyle(color: Colors.white),
@@ -128,7 +125,7 @@ class MusicSearch extends SearchDelegate {
           )
         : Container(
             color: Colors.black,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: ListView.builder(
               itemCount: suggetionList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -147,12 +144,12 @@ class MusicSearch extends SearchDelegate {
                     title: Text(
                       suggetionList[index].title.toString(),
                       maxLines: 1,
-                      style: TextStyle(color: Colors.white, fontSize: 15),
+                      style: const TextStyle(color: Colors.white, fontSize: 15),
                     ),
                     subtitle: Text(
                       suggetionList[index].artist.toString(),
                       maxLines: 1,
-                      style: TextStyle(color: Colors.white, fontSize: 10),
+                      style: const TextStyle(color: Colors.white, fontSize: 10),
                     ),
                     trailing: IconButton(
                       icon: functionIcon(Icons.more_horiz, 20, Colors.white),

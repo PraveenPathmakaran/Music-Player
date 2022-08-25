@@ -28,5 +28,5 @@ Future<void> setupPlaylist() async {
       autoStart: false,
       loopMode: LoopMode.playlist,
       showNotification: notification.value,
-      notificationSettings: NotificationSettings(stopEnabled: false));
+      notificationSettings: const NotificationSettings(stopEnabled: false));
 }
